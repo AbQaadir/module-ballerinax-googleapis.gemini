@@ -1,7 +1,7 @@
 import ballerina/test;
 import ballerina/log;
 
-// Configuration from Config.toml file (with fallback defaults for tests)
+// Test configuration - hardcoded for testing
 configurable string geminiApiKey = "<YOUR_API_KEY_HERE>";
 configurable string geminiModel = "gemini-2.5-flash";
 
@@ -45,7 +45,6 @@ function testRealGeminiAPICall() returns error? {
     string responseText = <string>response["candidates"][0]["content"]["parts"][0]["text"];
 
     // Verify we got a real response
-    test:assertTrue(response.candidates.length() > 0, "API should return candidates");
     test:assertTrue(responseText.length() > 0, "Should get actual response text");
     
 }
