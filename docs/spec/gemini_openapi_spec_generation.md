@@ -1,3 +1,4 @@
+
 # Gemini OpenAPI Specification Generation Process
 
 This document describes the complete process of generating the OpenAPI YAML specification (`openapi.yaml`) for the [Google Gemini Generative Language API](https://ai.google.dev/gemini-api), starting from the official Protocol Buffer (`.proto`) files. It includes all steps, commands, and explanations required for reproducibility and future reference.
@@ -57,7 +58,7 @@ However, **these additional_bindings result in ambiguous or duplicated `operatio
 
 ### **Modification Example**
 
-**Original (code_1):**
+**Original Code**
 ```proto
 service GenerativeService {
   // Generates a model response given an input GenerateContentRequest.
@@ -74,7 +75,7 @@ service GenerativeService {
 }
 ```
 
-**Updated for OpenAPI Generation (code_2):**
+**Updated Code for OpenAPI Generation**
 ```proto
 service GenerativeService {
   // The original RPC was split into three distinct methods to ensure unique operationIds for OpenAPI generation.
@@ -150,8 +151,6 @@ security:
   - ApiKeyAuth: []
 ```
 
-**Citation:** [Gemini API Authentication](https://ai.google.dev/gemini-api/docs/authentication)
-
 ---
 
 ## 8. Validating and Editing the Spec
@@ -172,8 +171,6 @@ security:
   [https://github.com/google/gnostic/tree/main/apps/protoc-gen-openapi](https://github.com/google/gnostic/tree/main/apps/protoc-gen-openapi)
 - **Swagger Editor:**  
   [https://editor.swagger.io/](https://editor.swagger.io/)
-- **Authentication Reference:**  
-  [Gemini API Authentication](https://ai.google.dev/gemini-api/docs/authentication)
 
 ---
 
@@ -186,5 +183,5 @@ security:
 ---
 
 **Maintainer:**  
-@AbQaadir  
+Abdul Qaadir : qaadireng@gmail.com 
 Feel free to reach out for clarifications or improvements to this process.
