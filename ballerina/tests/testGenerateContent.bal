@@ -1,12 +1,9 @@
 import ballerina/test;
 import ballerina/log;
 
-// Test configuration - reuse the same configurable variables from main.bal
-// This way tests can override the main.bal config values
-
-// // Configuration from Config.toml file (with fallback defaults for tests)
-// configurable string geminiApiKey = "<YOUR_API_KEY_HERE>";
-// configurable string geminiModel = "gemini-2.5-flash";
+// Configuration from Config.toml file (with fallback defaults for tests)
+configurable string geminiApiKey = "<YOUR_API_KEY_HERE>";
+configurable string geminiModel = "gemini-2.5-flash";
 
 @test:Config {}
 function testGeminiClientInitialization() {
