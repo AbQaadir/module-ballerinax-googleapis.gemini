@@ -139,7 +139,7 @@ public type CodeExecution record {
 #     `safety_ratings`.
 public type GenerateContentResponse record {
     # Candidate responses from the model.
-    Candidate[] candidates?;
+    Candidate[] candidates;
     # Returns the prompt's feedback related to the content filters.
     GenerateContentResponse_PromptFeedback promptFeedback?;
     # Output only. Metadata on the generation requests' token usage.
@@ -357,11 +357,11 @@ public type Candidate record {
     # Output only. Index of the candidate in the list of response candidates.
     int:Signed32 index?;
     # Output only. Generated content returned from the model.
-    Content content?;
+    Content content;
     # Optional. Output only. The reason why the model stopped generating tokens.
     # 
     #  If empty, the model has not stopped generating tokens.
-    int finishReason?;
+    int|string finishReason?;
     # List of ratings for the safety of a response candidate.
     # 
     #  There is at most one rating per category.
@@ -427,7 +427,7 @@ public type EmbedContentResponse record {
 # Represents token counting info for a single modality.
 public type ModalityTokenCount record {
     # The modality associated with this token count.
-    int modality?;
+    int|string modality?;
     # Number of tokens.
     int:Signed32 tokenCount?;
 };
@@ -472,7 +472,7 @@ public type LogprobsResult record {
 #  of the media if the `inline_data` field is filled with raw bytes.
 public type Part record {
     # Inline text.
-    string text?;
+    string text;
     # Inline media bytes.
     Blob inlineData?;
     # A predicted `FunctionCall` returned from the model that contains
@@ -508,7 +508,7 @@ public type Part record {
 public type Content record {
     # Ordered `Parts` that constitute a single message. Parts may have different
     #  MIME types.
-    Part[] parts?;
+    Part[] parts;
     # Optional. The producer of the content. Must be either 'user' or 'model'.
     # 
     #  Useful to set for multi-turn conversations, otherwise can be left blank
