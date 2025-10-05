@@ -181,5 +181,3 @@ security:
   *(This file is now the foundation for client generation and connector development.)*
 
 ---
-
-@AbQaadir
