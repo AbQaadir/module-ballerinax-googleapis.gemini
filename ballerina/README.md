@@ -39,14 +39,8 @@ Ballerina uses configurable variables that can be provided via a `Config.toml` f
 
 #### Create Config.toml file
 ```toml
-apiKey = "your_api_key_here"
-```
-
-For more complex configurations, you can structure the configuration as:
-```toml
-[gemini]
-apiKey = "your_api_key_here"
-serviceUrl = "https://generativelanguage.googleapis.com/v1beta"
+geminiApiKey = "your_api_key_here"
+geminiModel = "gemini-2.5-flash"
 ```
 
 #### Configure .gitignore
@@ -68,7 +62,138 @@ This ensures your sensitive configuration data remains secure and is not exposed
 
 ## Quickstart
 
-[//]: # (TODO: Add a quickstart guide to demonstrate a basic functionality of the module, including sample code snippets.)
+### 1. Generate Content
+
+To use the `Gemini` connector for content generation in your Ballerina application, update the `.bal` file as follows:
+
+#### Step 1: Import the module
+
+Import the `googleapis.gemini` module.
+
+```ballerina
+import ballerinax/googleapis.gemini;
+```
+
+#### Step 2: Instantiate a new connector
+
+1. Create a `gemini:ApiKeysConfig` with the obtained API key and initialize the connector with it.
+
+```ballerina
+configurable string geminiApiKey = ?;
+configurable string geminiModel = ?;
+    
+// Create API configuration
+gemini:ApiKeysConfig apiKeysConfig = { xGoogApiKey: geminiApiKey };
+
+// Create the Gemini client
+gemini:Client geminiClient = check new (apiKeysConfig);
+```
+
+#### Step 3: Create the request
+
+##### Prepare the content for the request
+
+```ballerina
+gemini:Content userContent = {
+   parts: [
+      {
+            text: "Who were the brilliant minds behind the 2017 groundbreaking AI paper 'Attention Is All You Need'?"
+      }
+   ]
+};
+
+gemini:GenerateContentRequest request = {
+   model: geminiModel,
+   contents: [userContent]
+};
+```
+
+#### Step 4: Invoke the connector operation
+
+Now, utilize the available connector operations.
+
+##### Generate content with Gemini
+
+```ballerina
+public function main() returns error? {
+   gemini:GenerateContentResponse response = check geminiClient->generativeServiceGenerateModelContent(
+      geminiModel, request
+   );
+}
+```
+
+#### Step 5: Run the Ballerina application
+
+```bash
+bal run
+```
+
+### 2. Generate Embedding
+
+To use the `Gemini` connector for generating embeddings in your Ballerina application, follow these steps:
+
+#### Step 1: Import the module
+
+Import the `googleapis.gemini` module.
+
+```ballerina
+import ballerinax/googleapis.gemini;
+```
+
+#### Step 2: Instantiate a new connector
+
+1. Create a `gemini:ApiKeysConfig` with the obtained API key and initialize the connector with it.
+
+```ballerina
+configurable string geminiApiKey = "AIzaSyDtGfTI1Mkj9R_4-sC1pwP8ivju2fLV0oI";
+configurable string geminiEmbeddingModel = "gemini-embedding-001";
+
+// Create API configuration
+gemini:ApiKeysConfig apiKeysConfig = { xGoogApiKey: geminiApiKey };
+
+// Create the Gemini client
+gemini:Client geminiClient = check new (apiKeysConfig);
+```
+
+#### Step 3: Create the request
+
+##### Prepare the content for embedding
+
+```ballerina
+gemini:Content textContent = {
+    parts: [
+        {
+            text: "The quick brown fox jumps over the lazy dog."
+        }
+    ]
+};
+
+gemini:EmbedContentRequest request = {
+    model: geminiEmbeddingModel,
+    content: textContent
+};
+```
+
+#### Step 4: Invoke the connector operation
+
+Now, utilize the available connector operations.
+
+##### Generate embedding with Gemini
+
+```ballerina
+public function main() returns error? {
+    // Make the API call
+    gemini:EmbedContentResponse response = check geminiClient->generativeServiceEmbedContent(
+        geminiEmbeddingModel, request
+    );
+}
+```
+
+#### Step 5: Run the Ballerina application
+
+```bash
+bal run
+```
 
 ## Examples
 
