@@ -1,13 +1,9 @@
 import ballerina/test;
 import ballerina/log;
 
-// Test configuration - using the same API key from config
-configurable string geminiApiKey = "<YOUR_API_KEY_HERE>";
-configurable string geminiModel = "gemini-2.5-flash";
-
 @test:Config {}
 function testGeminiFunctionCallClientInitialization() {
-    ApiKeysConfig apiKeysConfig = { xGoogApiKey: geminiApiKey };
+    ApiKeysConfig apiKeysConfig = getTestApiKeysConfig();
     Client|error geminiClient = new (apiKeysConfig);
     test:assertTrue(geminiClient is Client, "Client should be initialized successfully");
 }
@@ -18,7 +14,7 @@ function testGeminiFunctionCallClientInitialization() {
 function testRealGeminiFunctionCallAPICall() returns error? {   
 
     // Initialize the client 
-    ApiKeysConfig apiKeysConfig = { xGoogApiKey: geminiApiKey };
+    ApiKeysConfig apiKeysConfig = getTestApiKeysConfig();
     Client geminiClient = check new (apiKeysConfig);
     
     // Define function declaration for smart light control (same as main-functioncall.bal)
@@ -59,14 +55,14 @@ function testRealGeminiFunctionCallAPICall() returns error? {
     
     // Create the GenerateContentRequest with tools
     GenerateContentRequest request = {
-        model: geminiModel,
+        model: getTestGeminiModel(),
         contents: [userContent],
         tools: [lightControlTool]
     };
     
     // Make the API call
     GenerateContentResponse response = check geminiClient->generativeServiceGenerateModelContent(
-        geminiModel, request
+        getTestGeminiModel(), request
     );
 
     // Log the full response for debugging

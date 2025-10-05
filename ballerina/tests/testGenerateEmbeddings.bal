@@ -1,13 +1,9 @@
 import ballerina/test;
 import ballerina/log;
 
-// Test configuration - hardcoded for testing
-configurable string geminiApiKey = "<YOUR_API_KEY_HERE>";
-configurable string geminiEmbeddingModel = "gemini-embedding-001";
-
 @test:Config {}
 function testGeminiEmbeddingClientInitialization() {
-    ApiKeysConfig apiKeysConfig = { xGoogApiKey: geminiApiKey };
+    ApiKeysConfig apiKeysConfig = getTestApiKeysConfig();
     Client|error geminiClient = new (apiKeysConfig);
     test:assertTrue(geminiClient is Client, "Client should be initialized successfully");
 }
@@ -18,7 +14,7 @@ function testGeminiEmbeddingClientInitialization() {
 function testRealGeminiEmbeddingAPICall() returns error? {   
 
     // Initialize the client 
-    ApiKeysConfig apiKeysConfig = { xGoogApiKey: geminiApiKey };
+    ApiKeysConfig apiKeysConfig = getTestApiKeysConfig();
     Client geminiClient = check new (apiKeysConfig);
     
     // Prepare the content for embedding
@@ -32,27 +28,23 @@ function testRealGeminiEmbeddingAPICall() returns error? {
     
     // Create embedding request
     EmbedContentRequest request = {
-        model: geminiEmbeddingModel,
+        model: getTestEmbeddingModel(),
         content: textContent
     };
     
     // Make the API call
     EmbedContentResponse response = check geminiClient->generativeServiceEmbedContent(
-        geminiEmbeddingModel, request
+        getTestEmbeddingModel(), request
     );
     
-    if response.embedding is ContentEmbedding {
-        ContentEmbedding embedding = <ContentEmbedding>response.embedding;
+    // response.embedding is already ContentEmbedding type, no condition needed
+    ContentEmbedding embedding = response.embedding;
 
-        test:assertTrue(embedding.values is float[], "Embedding should have values");
-        
-        if embedding.values is float[] {
-            float[] values = <float[]>embedding.values;
-            test:assertTrue(values.length() > 0, "Embedding should have dimension > 0");
-            
-            // Log embedding info
-            log:printInfo("Embedding dimension: " + values.length().toString());
-            log:printInfo("First 5 values: " + values.slice(0, 5).toString());
-        }
-    }
+    // embedding.values is already float[] type, no need to check
+    float[] values = embedding.values;
+    test:assertTrue(values.length() > 0, "Embedding should have dimension > 0");
+    
+    // Log embedding info
+    log:printInfo("Embedding dimension: " + values.length().toString());
+    log:printInfo("First 5 values: " + values.slice(0, 5).toString());
 }

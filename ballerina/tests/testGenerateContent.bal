@@ -1,13 +1,9 @@
 import ballerina/test;
 import ballerina/log;
 
-// Test configuration - hardcoded for testing
-configurable string geminiApiKey = "<YOUR_API_KEY_HERE>";
-configurable string geminiModel = "gemini-2.5-flash";
-
 @test:Config {}
 function testGeminiClientInitialization() {
-    ApiKeysConfig apiKeysConfig = { xGoogApiKey: geminiApiKey };
+    ApiKeysConfig apiKeysConfig = getTestApiKeysConfig();
     Client|error geminiClient = new (apiKeysConfig);
     test:assertTrue(geminiClient is Client, "Client should be initialized successfully");
 }
@@ -18,7 +14,7 @@ function testGeminiClientInitialization() {
 function testRealGeminiAPICall() returns error? {   
 
     // Initialize the client 
-    ApiKeysConfig apiKeysConfig = { xGoogApiKey: geminiApiKey };
+    ApiKeysConfig apiKeysConfig = getTestApiKeysConfig();
     Client geminiClient = check new (apiKeysConfig);
     
 
@@ -29,13 +25,13 @@ function testRealGeminiAPICall() returns error? {
     };
     
     GenerateContentRequest request = {
-        model: geminiModel,
+        model: getTestGeminiModel(),
         contents: [userContent]
     };
     
     // Make the API call
     GenerateContentResponse response = check geminiClient->generativeServiceGenerateModelContent(
-        geminiModel, request
+        getTestGeminiModel(), request
     );
 
     // Log the full response for debugging
