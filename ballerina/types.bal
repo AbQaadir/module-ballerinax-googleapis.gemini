@@ -57,7 +57,7 @@ public type GroundingMetadata record {
 #  object](https://spec.openapis.org/oas/v3.0.3#schema).
 public type Schema record {
     # Required. Data type.
-    int 'type;
+    int|string 'type;
     # Optional. The format of the data. This is used only for primitive
     #  datatypes. Supported formats:
     #   for NUMBER type: float, double
@@ -472,7 +472,7 @@ public type LogprobsResult record {
 #  of the media if the `inline_data` field is filled with raw bytes.
 public type Part record {
     # Inline text.
-    string text;
+    string text?;
     # Inline media bytes.
     Blob inlineData?;
     # A predicted `FunctionCall` returned from the model that contains
