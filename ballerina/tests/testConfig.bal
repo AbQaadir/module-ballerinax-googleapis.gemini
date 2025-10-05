@@ -3,7 +3,7 @@
 
 configurable string geminiApiKey = "<GEMINI_API_KEY>";
 configurable string geminiModel = "gemini-2.5-flash";
-configurable string geminiEmbeddingModel = "text-embedding-004";
+configurable string geminiEmbeddingModel = "gemini-embedding-001";
 
 // Test utility functions
 public function getTestApiKeysConfig() returns ApiKeysConfig {
