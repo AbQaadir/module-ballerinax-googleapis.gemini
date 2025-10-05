@@ -153,7 +153,7 @@ import ballerinax/googleapis.gemini;
 1. Create a `gemini:ApiKeysConfig` with the obtained API key and initialize the connector with it.
 
 ```ballerina
-configurable string geminiApiKey = "AIzaSyDtGfTI1Mkj9R_4-sC1pwP8ivju2fLV0oI";
+configurable string geminiApiKey = ?;
 configurable string geminiEmbeddingModel = "gemini-embedding-001";
 
 // Create API configuration
