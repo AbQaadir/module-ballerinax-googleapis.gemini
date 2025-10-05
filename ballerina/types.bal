@@ -421,7 +421,7 @@ public type GenerateAnswerResponse_InputFeedback record {
 # The response to an `EmbedContentRequest`.
 public type EmbedContentResponse record {
     # Output only. The embedding generated from the input content.
-    ContentEmbedding embedding?;
+    ContentEmbedding embedding;
 };
 
 # Represents token counting info for a single modality.
@@ -1095,7 +1095,7 @@ public type GroundingPassages record {
 # A list of floats representing an embedding.
 public type ContentEmbedding record {
     # The embedding values.
-    float[] values?;
+    float[] values;
 };
 
 # The result output from a `FunctionCall` that contains a string
