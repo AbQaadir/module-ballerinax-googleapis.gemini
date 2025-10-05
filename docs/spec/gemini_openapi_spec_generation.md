@@ -182,6 +182,4 @@ security:
 
 ---
 
-**Maintainer:**  
-Abdul Qaadir : qaadireng@gmail.com 
-Feel free to reach out for clarifications or improvements to this process.
+@AbQaadir
