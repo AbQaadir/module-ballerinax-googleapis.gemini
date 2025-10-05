@@ -1,0 +1,14 @@
+[package]
+org = "qaadi"
+name = "chat_with_gemini"
+version = "0.1.0"
+distribution = "2201.12.9"
+
+[build-options]
+observabilityIncluded = true
+
+[[dependency]]
+org = "ballerinax"
+name = "googleapis.gemini"
+version = "4.0.0"
+repository = "local"
